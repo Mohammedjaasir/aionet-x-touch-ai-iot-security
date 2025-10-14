@@ -1,0 +1,138 @@
+/* Updated: 2025-10-14T21:04:27.844Z */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-cyber-purple: var(--cyber-purple);
+  --color-dark-bg: var(--dark-bg);
+  --color-darker-bg: var(--darker-bg);
+  --color-threat-red: var(--threat-red);
+  --color-safe-green: var(--safe-green);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.08 0 0);
+  --foreground: oklch(0.985 0 0);
+  --neon-blue: #00d4ff;
+  --neon-cyan: #00ffff;
+  --cyber-purple: #9d4edd;
+  --dark-bg: #0a0a0f;
+  --darker-bg: #050508;
+  --threat-red: #ff0055;
+  --safe-green: #00ff88;
+  --electric-pink: #ff006e;
+  --vivid-orange: #ff8500;
+  --bright-purple: #a855f7;
+  --lime-green: #84cc16;
+  --sky-blue: #38bdf8;
+}
+
+@layer base {
+  * {
+    @apply outline-none;
+  }
+  
+  body {
+    @apply bg-[var(--darker-bg)] text-foreground overflow-x-hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /* Enhanced Neon glow effects with more vibrant colors */
+  .glow-blue {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.7), 0 0 60px rgba(0, 212, 255, 0.4), 0 0 90px rgba(0, 212, 255, 0.2);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.7), 0 0 60px rgba(0, 255, 255, 0.4), 0 0 90px rgba(0, 255, 255, 0.2);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.7), 0 0 60px rgba(168, 85, 247, 0.4), 0 0 90px rgba(168, 85, 247, 0.2);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 30px rgba(255, 0, 85, 0.7), 0 0 60px rgba(255, 0, 85, 0.4), 0 0 90px rgba(255, 0, 85, 0.2);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.7), 0 0 60px rgba(0, 255, 136, 0.4), 0 0 90px rgba(0, 255, 136, 0.2);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 30px rgba(255, 0, 110, 0.7), 0 0 60px rgba(255, 0, 110, 0.4), 0 0 90px rgba(255, 0, 110, 0.2);
+  }
+
+  .glow-orange {
+    box-shadow: 0 0 30px rgba(255, 133, 0, 0.7), 0 0 60px rgba(255, 133, 0, 0.4), 0 0 90px rgba(255, 133, 0, 0.2);
+  }
+
+  .text-glow-blue {
+    text-shadow: 0 0 15px rgba(0, 212, 255, 1), 0 0 30px rgba(0, 212, 255, 0.7), 0 0 45px rgba(0, 212, 255, 0.4);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 15px rgba(0, 255, 255, 1), 0 0 30px rgba(0, 255, 255, 0.7), 0 0 45px rgba(0, 255, 255, 0.4);
+  }
+
+  .text-glow-purple {
+    text-shadow: 0 0 15px rgba(168, 85, 247, 1), 0 0 30px rgba(168, 85, 247, 0.7), 0 0 45px rgba(168, 85, 247, 0.4);
+  }
+
+  .text-glow-pink {
+    text-shadow: 0 0 15px rgba(255, 0, 110, 1), 0 0 30px rgba(255, 0, 110, 0.7), 0 0 45px rgba(255, 0, 110, 0.4);
+  }
+
+  /* Animated gradient background with more vibrant colors */
+  .cyber-gradient {
+    background: linear-gradient(135deg, var(--darker-bg) 0%, #0f0a2e 25%, #1a0f3e 50%, #0f0a2e 75%, var(--darker-bg) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Enhanced Grid pattern overlay */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(rgba(0, 212, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.08) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  /* Pulse animation */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Scanning line effect */
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  .scan-line {
+    animation: scan 3s linear infinite;
+  }
+}
+
+/* Hide Next.js error overlay portal */
+nextjs-portal {
+  display: none !important;
+}
