@@ -122,7 +122,7 @@ npm run dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the application.
+Open https://3000-cf5f5cc8-7cb2-4730-be12-72581c6c2b16.orchids.page/ to view the application.
 
 ### Project Structure
 
