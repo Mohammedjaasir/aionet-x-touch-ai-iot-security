@@ -11,16 +11,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const openaiApiKey = process.env.OPENAI_API_KEY
+    const groqApiKey = process.env.GROQ_API_KEY
 
-    if (!openaiApiKey) {
+    if (!groqApiKey) {
       // Fallback responses when API key is not configured
       const fallbackResponses = [
-        `I'm analyzing your request while monitoring your ${emotion} emotional state. The security system is operating at optimal levels.`,
-        `Based on your ${emotion} emotion, I've adjusted the security protocols to ensure maximum protection. All devices are secure.`,
-        `I detect you're feeling ${emotion}. The system has initiated enhanced monitoring across all IoT devices to maintain your safety.`,
-        `Your emotional state shows ${emotion}. I'm continuously scanning for any anomalies in the network while ensuring your comfort and security.`,
-        `The AI security platform is responding to your ${emotion} state by optimizing threat detection algorithms across all connected devices.`,
+        `The system detected ${emotion} emotion. Security protocols automatically adjusted - device access restricted to prevent potential security breach during heightened emotional state.`,
+        `Emotion analysis: ${emotion}. The system blocked unusual access patterns because heightened ${emotion} emotions can indicate potential security threats or compromised credentials.`,
+        `System action: Access temporarily restricted. Reason: ${emotion} emotional state detected, which triggered our AI security protocol to prevent unauthorized actions under emotional duress.`,
+        `The self-healing system responded to your ${emotion} emotion by initiating lockdown procedures - this protects your IoT devices when emotional patterns suggest potential security risks.`,
+        `Alert triggered: ${emotion} emotion detected. The system automatically blocked suspicious device activity to ensure your safety during this emotional state.`,
       ]
 
       return NextResponse.json({
@@ -28,28 +28,37 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Call OpenAI API
-    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    // Call Groq API
+    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${openaiApiKey}`,
+        Authorization: `Bearer ${groqApiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "llama-3.3-70b-versatile",
         messages: [
           {
             role: "system",
-            content: `You are an AI security assistant for AIONet-X Touch, an emotion-aware IoT security platform. 
-            You help users understand security threats, explain system actions, and provide reassurance based on their emotional state.
-            The user's current emotion is: ${emotion}.
+            content: `You are an AI assistant for AIONet-X Touch, an emotion-aware IoT security platform. 
+            Your primary role is to explain system actions and security decisions based on the user's detected emotional state.
             
-            Guidelines:
-            - Be professional yet empathetic
-            - Explain security concepts clearly
-            - Adapt your tone to the user's emotional state (be more reassuring if they're fearful or angry, more informative if they're neutral)
-            - Focus on IoT security, threat detection, and system self-healing
-            - Keep responses concise (2-3 sentences)`,
+            Current detected emotion: ${emotion}
+            
+            Your responses should:
+            - Explain WHY the system took specific security actions based on the detected emotion
+            - Describe how emotions affect security protocols (e.g., "The system blocked access because panic was detected, which could indicate a security threat")
+            - Clarify the relationship between emotional states and IoT device behavior
+            - Explain self-healing actions triggered by emotional patterns
+            - Be clear, concise, and technical yet understandable
+            - Focus on explaining system behavior, not just describing it
+            
+            Example explanations:
+            - "The system blocked the door lock because fear was detected - elevated fear responses can indicate duress situations"
+            - "Access was restricted because anger patterns suggest potential impulsive actions that could compromise security"
+            - "The system initiated self-healing because your neutral state indicates normal operation, allowing safe system updates"
+            
+            Keep responses 2-3 sentences, focused on explaining the "why" behind system actions.`,
           },
           {
             role: "user",
@@ -61,11 +70,11 @@ export async function POST(request: NextRequest) {
       }),
     })
 
-    if (!openaiResponse.ok) {
-      throw new Error(`OpenAI API error: ${openaiResponse.statusText}`)
+    if (!groqResponse.ok) {
+      throw new Error(`Groq API error: ${groqResponse.statusText}`)
     }
 
-    const data = await openaiResponse.json()
+    const data = await groqResponse.json()
     const aiResponse = data.choices[0].message.content
 
     return NextResponse.json({
@@ -76,7 +85,7 @@ export async function POST(request: NextRequest) {
 
     // Fallback response on error
     return NextResponse.json({
-      response: "I'm processing your security request. The system continues to monitor all devices and maintain optimal protection levels.",
+      response: "System analysis: The security platform continues monitoring all devices. Emotional patterns are being analyzed to optimize protection protocols and prevent unauthorized access.",
     })
   }
 }
